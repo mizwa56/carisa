@@ -4,22 +4,18 @@
 
 <script>
     $(document).ready(function(){
-	  // $('.datetimepicker').datetimepicker({
-	  //     format:'Y/m/d H:i',
-	  //     startDate: '+3d'
-	  // })
+		// Loading Animation
+		window.start_load = function(){
+	    	$('body').prepend('<div id="preloader2"></div>')
+		}
+		window.end_load = function(){
+			$('#preloader2').fadeOut('fast', function() {
+				$(this).remove();
+			})
+		}
   	})
 
-    window.start_load = function(){
-	    $('body').prepend('<div id="preloader2"></div>')
-	}
-
-	window.end_load = function(){
-	    $('#preloader2').fadeOut('fast', function() {
-	        $(this).remove();
-	      })
-	}
-
+	// Result Modal (after submitting questionnaire responses)
 	window.uni_modal = function($title = '' , $url='', $size="", $result = []){
 		start_load()
 		$.ajax({
@@ -49,6 +45,7 @@
 		})
 	}
 
+	// Show alert for notification
 	window.showAlert = function($msg, $style){
 	$('.alert-container').css('position', 'fixed');
 	$('.alert-container').css('z-index', '999999');
@@ -61,6 +58,7 @@
 	$('.alert').css('transform', 'translateY(110px)');
 	}
 
+	// To calculate the score from questionnaire
 	window.getResult = function($data, $score) {
 	const hiSuggestion = "We strongly suggest that you seek medical assistance (including Ear, Nose and Throat examination) from relevant medical specialist(s) as soon as possible to get further professional advice, and proper diagnosis. It is necessary that you consider quarterly to half yearly medical check up.";
 	const middleSuggestion = "While you may be healthy now, it is advisable that you go for regular medical check up. It pays to have a healthy lifestyle too.";
@@ -113,27 +111,9 @@
 		result['desc'] = $data.survey_acronym + " indicate a <mark>" + result['rating'] + " " + $data.survey_name + " risk.</mark> Score: " + $score;
 	}
 	uni_modal(result['title'], "result.php", "large", result)
-
-	// let resultTitle;
-	// let risk;
-	// let riskDesc;
-	// let suggestion;
-	// let riskRating;
-	// let score = 0;
-
-
-	// resultTitle = "Your responses on " + $data.survey_acronym + ": " + $data.survey_name + " Risk Assessment were successfully submitted.";
-
-	// risk = (score > 5) ? "High Risk" : "Low Risk";
-	// riskRating = (score > 5) ? "moderate to high" : "low";
-	// suggestion = (score > 5) ? hiSuggestion : loSuggestion;
-
-	// riskDesc = $data.survey_acronym + " indicate a " + riskRating + " " + $data.survey_name + " risk."
-	
-	// uni_modal(resultTitle, "result.php", "large", risk, riskDesc, suggestion)
-	// $('#score').html(score);
-	// console.log(score)
 	}
 </script>
+<!-- Bootstrap Bundle JS -->
 <script src="assets\dist\js\bootstrap.bundle.min.js"></script>
+<!-- Custom JavaScript -->
 <script src="assets\script.js"></script>
