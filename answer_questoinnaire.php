@@ -1,4 +1,18 @@
-<?php $lang = isset($_GET['lang']) ? $_GET['lang'] : ''; ?>
+<?php 
+    $survey_ids = $conn->query('SELECT id FROM survey_set');
+    $ids = [];
+
+    while($row = $survey_ids->fetch_assoc()){
+        $ids[] = $row['id'];
+    }
+
+    if(!(in_array($_GET['id'], $ids))){
+        $_SESSION['alert'] = ["Invalid questionnaire request.", "warning"];
+        header("location: index.php");
+    }
+    
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : ''; 
+?>
 <section class="py-5">
     <div class="row container mx-auto">
         <div class="col-lg-5 my-3">
@@ -15,7 +29,7 @@
             <?php if(!isset($_GET['lang'])): ?>
             <div class="card mb-5">
                 <div class="card-body">
-                    <?php echo isset($_SESSION['login_id']) ? '' : '<div class="alert alert-warning">To take the assessment, you need to have an account. <a href="index.php?page=sign_up">Click here to sign up.</a></div>' ?>
+                    <?php echo isset($_SESSION['login_id']) ? '' : '<div class="alert alert-warning">To take the assessment, you need to have an account. Log in or <a href="index.php?page=sign_up">click here to sign up.</a></div>' ?>
                     
                     <p class="card-title">Choose the language that you wish to use to take the assessment.</p>
                     <hr>
@@ -44,28 +58,28 @@
                     $i = 0;
 					while($row=$question->fetch_assoc()):	
 					?>
-					<div class="d-flex flex-column gap-2 px-3 border-start border-5 border-warning rounded-start-1">
-						<strong><?php echo $row['question'] ?></strong>	
+					<div class="d-flex flex-column gap-2 px-3 border-start border-5 rounded-start-1" style="--bs-border-color: #4e4ebc">
+						<strong class="carisa-purple"><?php echo $row['question'] ?></strong>	
                         <small class="showTxt" onclick="showInfo(<?php echo $i ?>)"><i>Show more</i></small>
                         <small class="moreInfo text-danger"><?php echo $row['more_info'] ?></small>
 						<div class="col-md-12">
-						<input type="hidden" name="qid[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>">	
-						<input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
-							<?php
-								if($row['type'] == 'radio_opt'):
-									foreach(json_decode($row['frm_option']) as $k => $v):
-							?>
-							<div class="form-check mb-2">
-		                        <input class="form-check-input" type="radio" id="<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $v->points ?>" required>
-                                <!-- <input type="hidden" name="key[<?php echo $k ?>]" value="<?php echo $v->label ?>"> -->
-		                        <label class="form-check-label" for="<?php echo $k ?>"><?php echo $v->label ?></label>
-		                     </div>
-								<?php endforeach; ?>
-						<?php else: ?>
-							<div class="form-group">
-								<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
-							</div>
-						<?php endif; ?>
+                            <input type="hidden" name="qid[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>">	
+                            <input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
+                                <?php
+                                    if($row['type'] == 'radio_opt'):
+                                        foreach(json_decode($row['frm_option']) as $k => $v):
+                                ?>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" id="<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $v->points ?>" required>
+                                    <!-- <input type="hidden" name="key[<?php echo $k ?>]" value="<?php echo $v->label ?>"> -->
+                                    <label class="form-check-label" for="<?php echo $k ?>"><?php echo $v->label ?></label>
+                                </div>
+                                    <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="form-group">
+                                    <textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
+                                </div>
+                            <?php endif; ?>
 						</div>	
 					</div>
 					<?php 
@@ -73,7 +87,7 @@
                         endwhile; 
                     ?>
 				</div>
-                <?php echo isset($_SESSION['login_id']) ? '' : '<div class="alert alert-warning">To take the assessment, you need to have an account. <a href="index.php?page=sign_up">Click here to sign up.</a></div>' ?>
+                <?php echo isset($_SESSION['login_id']) ? '' : '<div class="alert alert-warning">To take the assessment, you need to have an account. Log in or <a href="index.php?page=sign_up">click here to sign up.</a></div>' ?>
 				</form>
 
                 

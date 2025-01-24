@@ -1,5 +1,3 @@
-# carisa
-
 1. to go to admin, type "/admin" at the end of url
 
 2. for now, questionnaire that have questions

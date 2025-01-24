@@ -110,6 +110,10 @@ body {
   color: #9271f6;
 }
 
+.carisa-muted {
+  color: #8585bd;
+}
+
 .carisa-btn {
   --bs-btn-font-weight: 600;
   --bs-btn-color: var(--bs-white);

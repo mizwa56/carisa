@@ -3,9 +3,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php 
         $title = isset($_GET['page']) ? ucwords(str_replace("_", ' ', $_GET['page'])) : 'Home' 
-    ?>
+        ?>
     <title><?php echo $title ?> | CARISA</title>
-
+    
+    <link rel="icon" type="image/x-icon" href="assets\img\logo.ico">
     <!-- Bootstrap v5.3 -->
     <link rel="stylesheet" href="assets/dist/css/bootstrap.min.css">
     <!-- jQuery-I CSS -->
@@ -21,4 +22,7 @@
     <!-- jQuery and jQuery-ui JavaScript -->
     <script src="assets\dist\js\jquery.min.js"></script>
     <script src="assets\dist\js\jquery-ui.min.js"></script>
+
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/7ffaa4e451.js" crossorigin="anonymous"></script>
 </head>

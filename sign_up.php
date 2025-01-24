@@ -92,7 +92,7 @@
     $(document).ready(function() {
         
         $('#manage-user').submit(function(e){
-            const namePattern = /^[a-zA-Z]+$/;
+            const namePattern = /^[a-zA-Z\s]+$/;
             const noPattern = /^\d{10,11}$/;
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\S{6,}$/;

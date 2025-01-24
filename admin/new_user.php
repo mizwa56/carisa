@@ -13,20 +13,12 @@
 							<input type="text" name="firstname" class="form-control form-control-sm" required value="<?php echo isset($firstname) ? $firstname : '' ?>">
 						</div>
 						<div class="form-group">
-							<label for="" class="control-label">Middle Name</label>
-							<input type="text" name="middlename" class="form-control form-control-sm"  value="<?php echo isset($middlename) ? $middlename : '' ?>">
-						</div>
-						<div class="form-group">
 							<label for="" class="control-label">Last Name</label>
 							<input type="text" name="lastname" class="form-control form-control-sm" required value="<?php echo isset($lastname) ? $lastname : '' ?>">
 						</div>
 						<div class="form-group">
 							<label for="" class="control-label">Contact No.</label>
 							<input type="text" name="contact" class="form-control form-control-sm" required value="<?php echo isset($contact) ? $contact : '' ?>">
-						</div>
-						<div class="form-group">
-							<label class="control-label">Address</label>
-							<textarea name="address" id="" cols="30" rows="4" class="form-control" required><?php echo isset($address) ? $address : '' ?></textarea>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -51,12 +43,13 @@
 						<div class="form-group">
 							<label class="control-label">Password</label>
 							<input type="password" class="form-control form-control-sm" name="password" <?php echo isset($id) ? "":'required' ?>>
-							<small><i><?php echo isset($id) ? "Leave this blank if you dont want to change you password":'' ?></i></small>
+							<small class="text-danger"><i><?php echo isset($id) ? "Currently not working.":'' ?></i></small>
 						</div>
 						<div class="form-group">
 							<label class="label control-label">Confirm Password</label>
 							<input type="password" class="form-control form-control-sm" name="cpass" <?php echo isset($id) ? 'required' : '' ?>>
 							<small id="pass_match" data-status=''></small>
+							<small class="text-danger"><i><?php echo isset($id) ? "Currently not working.":'' ?></i></small>
 						</div>
 					</div>
 				</div>

@@ -12,39 +12,40 @@ foreach($qry as $k => $v){
 		<div class="col-lg-12">
 			<div class="row">
 				<div class="col-sm-6 border-right">
-						<input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
-						<input type="hidden" name="sid" value="<?php echo isset($_GET['sid']) ? $_GET['sid'] : '' ?>">
-						<div class="form-group">
-							<label for="" class="control-label">Question</label>
-							<textarea name="question" id="" cols="30" rows="4" class="form-control"><?php echo isset($question)? $question: '' ?></textarea>
-						</div>
-						<div class="form-group">
-							<label for="" class="control-label">Question Answer Type</label>
-							<select name="type" id="type" class="custom-select custom-select-sm">
-								<?php if(isset($id)): ?>
-								<option value="" disabled="" selected="">Please Select here</option>
-								<?php endif; ?>
-								<option value="radio_opt" <?php echo isset($type) && $type == 'radio_opt' ? 'selected':'' ?>>Single Answer/Radio Button</option>
-								<option value="check_opt" <?php echo isset($type) && $type == 'check_opt' ? 'selected':'' ?>>Multiple Answer/Check Boxes</option>
-								<option value="textfield_s" <?php echo isset($type) && $type == 'textfield_s' ? 'selected':'' ?>>Text Field/ Text Area</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="" class="control-label">Question Information</label>
-							<textarea name="more_info" id="" cols="30" rows="4" class="form-control"><?php echo isset($more_info)? $more_info: '' ?></textarea>
-						</div>
-						<div class="form-group">
-							<label for="" class="control-label">Question Language</label>
-							<select name="lang" id="lang" class="custom-select custom-select-sm">
-								<?php if(isset($id)): ?>
-								<option value="" disabled="" selected="">Please Select here</option>
-								<?php endif; ?>
-								<option value="eng" <?php echo isset($lang) && $lang == 'eng' ? 'selected':'' ?>>English</option>
-								<option value="malay" <?php echo isset($lang) && $lang == 'malay' ? 'selected':'' ?>>Malay</option>
-								<option value="mandarin" <?php echo isset($lang) && $lang == 'mandarin' ? 'selected':'' ?>>Mandarin</option>
-								<option value="iban" <?php echo isset($lang) && $lang == 'iban' ? 'selected':'' ?>>Iban</option>
-							</select>
-						</div>
+					<input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+					<input type="hidden" name="sid" value="<?php echo isset($_GET['sid']) ? $_GET['sid'] : '' ?>">
+					<input type="hidden" name="order_by" value="<?php echo isset($order_by) ? $order_by : '' ?>">
+					<div class="form-group">
+						<label for="" class="control-label">Question <small>order_by-><?php echo isset($order_by) ? $order_by : '' ?></small></label>
+						<textarea name="question" id="" cols="30" rows="4" class="form-control"><?php echo isset($question)? $question: '' ?></textarea>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label">Question Answer Type</label>
+						<select name="type" id="type" class="custom-select custom-select-sm">
+							<?php if(isset($id)): ?>
+							<option value="" disabled="" selected="">Please Select here</option>
+							<?php endif; ?>
+							<option value="radio_opt" <?php echo isset($type) && $type == 'radio_opt' ? 'selected':'' ?>>Single Answer/Radio Button</option>
+							<option value="check_opt" <?php echo isset($type) && $type == 'check_opt' ? 'selected':'' ?>>Multiple Answer/Check Boxes</option>
+							<option value="textfield_s" <?php echo isset($type) && $type == 'textfield_s' ? 'selected':'' ?>>Text Field/ Text Area</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label">Question Information</label>
+						<textarea name="more_info" id="" cols="30" rows="4" class="form-control"><?php echo isset($more_info)? $more_info: '' ?></textarea>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label">Question Language</label>
+						<select name="lang" id="lang" class="custom-select custom-select-sm">
+							<?php if(isset($id)): ?>
+							<option value="" disabled="" selected="">Please Select here</option>
+							<?php endif; ?>
+							<option value="eng" <?php echo isset($lang) && $lang == 'eng' ? 'selected':'' ?>>English</option>
+							<option value="malay" <?php echo isset($lang) && $lang == 'malay' ? 'selected':'' ?>>Malay</option>
+							<option value="mandarin" <?php echo isset($lang) && $lang == 'mandarin' ? 'selected':'' ?>>Mandarin</option>
+							<option value="iban" <?php echo isset($lang) && $lang == 'iban' ? 'selected':'' ?>>Iban</option>
+						</select>
+					</div>
 				</div>
 				<div class="col-sm-6">
 					<b>Preview</b>

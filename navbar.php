@@ -22,22 +22,22 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="index.php?page=page2" class="nav-link">Contact</a>
+                        <a href="index.php?page=contact" class="nav-link">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a href="index.php?page=page3" class="nav-link">Privacy Policy</a>
+                        <a href="index.php?page=privacy_policy" class="nav-link">Privacy Policy</a>
                     </li>
                     <?php if(isset($_SESSION['login_id'])): ?>
                         <li class="nav-item dropdown">
-                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['login_firstname']?></a>
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user me-3"></i><?php echo $_SESSION['login_firstname']?></a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a href="index.php?page=manage_account&id=<?php echo $_SESSION['login_id'] ?>" class="dropdown-item">Manage Account</a></li>
-                                <li><a href="ajax.php?action=logout" class="dropdown-item">Logout</a></li>
+                                <li><a href="index.php?page=manage_account&id=<?php echo $_SESSION['login_id'] ?>" class="dropdown-item">Manage Account <i class="fa-solid fa-address-card ms-2"></i></a></li>
+                                <li><a href="ajax.php?action=logout" class="dropdown-item">Logout<i class="fa-solid fa-right-to-bracket ms-2"></i></a></li>
                             </ul>
                         </li>                        
                     <?php else: ?>
                         <li class="nav-item">
-                            <button class="btn carisa-btn" id="login"><strong>Log In</strong></button>
+                            <button class="btn carisa-btn" id="login"><strong>Log In</strong><i class="fa-solid fa-right-to-bracket ms-2"></i></button>
                         </li>
                     <?php endif ?>
                 </ul>

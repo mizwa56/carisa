@@ -1,6 +1,6 @@
 <section class="row py-5 container mx-auto">
   <div class="col-12 text-center mb-5">
-    <h1 class="fw-bold">Contact Us</h1>
+    <h1 class="fw-bold">Contact Us <span class="text-danger">(Work in Progress)</span></h1>
   </div>
   <div class="col-xl-12 text-bg-light">
     <div class="row">
