@@ -153,29 +153,57 @@ Class Action {
 	
 	function save_question(){
 		extract($_POST);
+
+		$order_qry = $this->db->query("SELECT order_by FROM questions WHERE survey_id = $sid AND lang = '$lang' ORDER BY order_by ASC");
+
+		if(empty($order_by)){
+			if($order_qry->num_rows > 0){
+				while($row = $order_qry->fetch_assoc()) {
+					$order = intval($row['order_by']);
+					$order++;
+				}
+			}
+			else {
+				$order = 1;	
+			}
+		}
+		else {
+			$order = $order_by;
+		}
+
+
 		$data = " survey_id=$sid ";
 		$data .= ", question='$question' ";
-		$data .= ", more_info='$more_info' ";
+		$data .= ", more_info='" .str_replace("'", "\'", $more_info). "' ";
 		$data .= ", type='$type' ";
 		$data .= ", lang='$lang' ";
+		$data .= ", order_by=$order ";
+		
 		if($type != 'textfield_s'){
 			$arr = array();
 			$j = 0;
+
 			foreach ($label as $k => $v) {
 				$i = 0 ;
-				while($i == 0){
-					$k = substr(str_shuffle(str_repeat($x='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
-					if(!isset($arr[$k]))
-						$i = 1;
+				if(isset($f_key[$j])) {
+					$k = $f_key[$j];
+				}
+				else {
+					while($i == 0){
+						$k = substr(str_shuffle(str_repeat($x='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', ceil(5/strlen($x)) )),1,7);
+						if(!isset($arr[$k]))
+							$i = 1;
+					}
 				}
 				$arr[$k]["label"] = $v;
 				$arr[$k]["points"] = $point[$j];
 				$j++;
 			}
-		$data .= ", frm_option='".json_encode($arr)."' ";
+			$data .= ", frm_option='".json_encode($arr, JSON_UNESCAPED_UNICODE)."' ";
 		}else{
-		$data .= ", frm_option='' ";
+			$data .= ", frm_option='' ";
 		}
+
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO questions set $data");
 		}else{

@@ -38,52 +38,241 @@ $answers = $conn->query("SELECT distinct(user_id) from answers where survey_id =
 					</div>
 				</div>
 				<form action="" id="manage-sort">
-				<div class="card-body ui-sortable">
-					<?php 
-					$question = $conn->query("SELECT * FROM questions where survey_id = $id order by abs(order_by) asc,abs(id) asc");
-					while($row=$question->fetch_assoc()):	
-					?>
-					<div class="callout callout-info">
-						<div class="row">
-							<div class="col-md-12">	
-								<span class="dropleft float-right">
-									<a class="fa fa-ellipsis-v text-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-									<div class="dropdown-menu" style="">
-								        <a class="dropdown-item edit_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Edit</a>
-								        <div class="dropdown-divider"></div>
-								        <a class="dropdown-item delete_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
-								     </div>
-								</span>	
-							</div>	
-						</div>	
-						<h5><?php echo $row['question'] ?></h5>	
-						<div class="col-md-12">
-						<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
-							<?php
-								if($row['type'] == 'radio_opt'):
-									foreach(json_decode($row['frm_option']) as $k => $v):
-							?>
-							<div class="icheck-primary">
-		                        <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
-		                        <label for="option_<?php echo $k ?>"><?php echo $v->label ?>  <small>(<?php echo $v->points ?> point)</small></label>
-		                     </div>
-								<?php endforeach; ?>
-								<?php elseif($row['type'] == 'check_opt'): 
-								foreach(json_decode($row['frm_option']) as $k => $v):
-							?>
-							<div class="icheck-primary">
-		                        <input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
-		                        <label for="option_<?php echo $k ?>"><?php echo $v->label ?></label>
-		                     </div>
-								<?php endforeach; ?>
-						<?php else: ?>
-							<div class="form-group">
-								<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
+				<!-- <div class="card-body ui-sortable"> -->
+				<div class="card-body">
+					<div class="accordion" id="surveyList">
+						<div class="card">
+							<div class="card-header" id="engSurvey">
+								<h2 class="mb-0">
+									<button type="button" class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#engBody" aria-expanded="true" aria-controls="engBody">English Survey</button>
+								</h2>
 							</div>
-						<?php endif; ?>
-						</div>	
+
+							<div class="collapse" id="engBody" aria-labelledby="engSurvey" data-parent="#surveyList">
+								<div class="card-body ui-sortable">
+									<?php 
+									$question = $conn->query("SELECT * FROM questions where survey_id = $id and lang = 'eng' order by abs(order_by) asc,abs(id) asc");
+									while($row=$question->fetch_assoc()):	
+									?>
+									<div class="callout callout-info">
+										<div class="row">
+											<div class="col-md-12">	
+												<span class="dropleft float-right">
+													<a class="fa fa-ellipsis-v text-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+													<div class="dropdown-menu" style="">
+														<a class="dropdown-item edit_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Edit</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item delete_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+													</div>
+												</span>	
+											</div>	
+										</div>	
+										<h5><?php echo $row['question'] ?></h5>	
+										<div class="col-md-12">
+										<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
+											<?php
+												if($row['type'] == 'radio_opt'):
+													foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?>  <small>(<?php echo $v->points ?> point)</small></label>
+											</div>
+												<?php endforeach; ?>
+												<?php elseif($row['type'] == 'check_opt'): 
+												foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?></label>
+											</div>
+												<?php endforeach; ?>
+										<?php else: ?>
+											<div class="form-group">
+												<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
+											</div>
+										<?php endif; ?>
+										</div>	
+									</div>
+									<?php endwhile; ?>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-header" id="malaySurvey">
+								<h2 class="mb-0">
+									<button type="button" class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#malayBody" aria-expanded="true" aria-controls="malayBody">Malay Survey</button>
+								</h2>
+							</div>
+
+							<div class="collapse" id="malayBody" aria-labelledby="malaySurvey" data-parent="#surveyList">
+								<div class="card-body ui-sortable">
+									<?php 
+									$question = $conn->query("SELECT * FROM questions where survey_id = $id and lang = 'malay' order by abs(order_by) asc,abs(id) asc");
+									while($row=$question->fetch_assoc()):	
+									?>
+									<div class="callout callout-info">
+										<div class="row">
+											<div class="col-md-12">	
+												<span class="dropleft float-right">
+													<a class="fa fa-ellipsis-v text-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+													<div class="dropdown-menu" style="">
+														<a class="dropdown-item edit_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Edit</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item delete_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+													</div>
+												</span>	
+											</div>	
+										</div>	
+										<h5><?php echo $row['question'] ?></h5>	
+										<div class="col-md-12">
+										<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
+											<?php
+												if($row['type'] == 'radio_opt'):
+													foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?>  <small>(<?php echo $v->points ?> point)</small></label>
+											</div>
+												<?php endforeach; ?>
+												<?php elseif($row['type'] == 'check_opt'): 
+												foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?></label>
+											</div>
+												<?php endforeach; ?>
+										<?php else: ?>
+											<div class="form-group">
+												<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
+											</div>
+										<?php endif; ?>
+										</div>	
+									</div>
+									<?php endwhile; ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-header" id="mandarinSurvey">
+								<h2 class="mb-0">
+									<button type="button" class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#mandarinBody" aria-expanded="true" aria-controls="mandarinBody">Mandarin Survey</button>
+								</h2>
+							</div>
+
+							<div class="collapse" id="mandarinBody" aria-labelledby="mandarinSurvey" data-parent="#surveyList">
+								<div class="card-body">
+									<?php 
+									$question = $conn->query("SELECT * FROM questions where survey_id = $id and lang = 'mandarin' order by abs(order_by) asc,abs(id) asc");
+									while($row=$question->fetch_assoc()):	
+									?>
+									<div class="callout callout-info">
+										<div class="row">
+											<div class="col-md-12">	
+												<span class="dropleft float-right">
+													<a class="fa fa-ellipsis-v text-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+													<div class="dropdown-menu" style="">
+														<a class="dropdown-item edit_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Edit</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item delete_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+													</div>
+												</span>	
+											</div>	
+										</div>	
+										<h5><?php echo $row['question'] ?></h5>	
+										<div class="col-md-12">
+										<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
+											<?php
+												if($row['type'] == 'radio_opt'):
+													foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?>  <small>(<?php echo $v->points ?> point)</small></label>
+											</div>
+												<?php endforeach; ?>
+												<?php elseif($row['type'] == 'check_opt'): 
+												foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?></label>
+											</div>
+												<?php endforeach; ?>
+										<?php else: ?>
+											<div class="form-group">
+												<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
+											</div>
+										<?php endif; ?>
+										</div>	
+									</div>
+									<?php endwhile; ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-header" id="ibanSurvey">
+								<h2 class="mb-0">
+									<button type="button" class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#ibanBody" aria-expanded="true" aria-controls="ibanBody">Iban Survey</button>
+								</h2>
+							</div>
+
+							<div class="collapse" id="ibanBody" aria-labelledby="ibanSurvey" data-parent="#surveyList">
+								<div class="card-body">
+									<?php 
+									$question = $conn->query("SELECT * FROM questions where survey_id = $id and lang = 'mandarin' order by abs(order_by) asc,abs(id) asc");
+									while($row=$question->fetch_assoc()):	
+									?>
+									<div class="callout callout-info">
+										<div class="row">
+											<div class="col-md-12">	
+												<span class="dropleft float-right">
+													<a class="fa fa-ellipsis-v text-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+													<div class="dropdown-menu" style="">
+														<a class="dropdown-item edit_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Edit</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item delete_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+													</div>
+												</span>	
+											</div>	
+										</div>	
+										<h5><?php echo $row['question'] ?></h5>	
+										<div class="col-md-12">
+										<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
+											<?php
+												if($row['type'] == 'radio_opt'):
+													foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?>  <small>(<?php echo $v->points ?> point)</small></label>
+											</div>
+												<?php endforeach; ?>
+												<?php elseif($row['type'] == 'check_opt'): 
+												foreach(json_decode($row['frm_option']) as $k => $v):
+											?>
+											<div class="icheck-primary">
+												<input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
+												<label for="option_<?php echo $k ?>"><?php echo $v->label ?></label>
+											</div>
+												<?php endforeach; ?>
+										<?php else: ?>
+											<div class="form-group">
+												<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
+											</div>
+										<?php endif; ?>
+										</div>	
+									</div>
+									<?php endwhile; ?>
+								</div>
+							</div>
+						</div>
 					</div>
-					<?php endwhile; ?>
+					
 				</div>
 				</form>
 			</div>

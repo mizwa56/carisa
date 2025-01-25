@@ -83,6 +83,7 @@ foreach($qry as $k => $v){
 								      	<td class="text-center">
 								      		<div class="icheck-primary d-inline" data-count = '<?php echo $i ?>'>
 									        	<input type="<?php echo $opt ?>" id="<?php echo $opt ?>Primary<?php echo $i ?>" name="<?php echo $opt ?>" checked="">
+												<input type="hidden" name="f_key[]" value="<?php echo $k ?>">
 									        	<label for="<?php echo $opt ?>Primary<?php echo $i ?>">
 									        	</label>
 									        </div>
