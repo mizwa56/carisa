@@ -3,30 +3,30 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="m-0"><strong><?php echo isset($id) ? "Your Account Details" : "User Sign Up" ?></strong></h3>
+                    <h5 class="m-0 py-2"><strong><?php echo isset($id) ? "Your Account Details" : "User Sign Up" ?></strong></h5>
                 </div>
                 <div class="card-body">
                     <form action="" id="manage-user">
                         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
                         <div class="row">
                             <div class="col-12">
-                                <div class="mb-3"><b class="">Personal Information</b></div>
+                                <div class="mb-3"><b class="carisa-purple">Personal Information</b></div>
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="firstName" class="col-lg-3 col-form-label text-muted">First Name</label>
+                                    <label for="firstName" class="col-lg-3 col-form-label carisa-muted">First Name</label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control" name="firstname" id="firstName" required <?php if(isset($firstname)) {echo 'value="' .$firstname. '"';} ?>>
                                         <small id="firstName_regex" data-status=''></small>
                                     </div>
                                 </div>
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="lastName" class="col-lg-3 col-form-label text-muted">Last Name</label>
+                                    <label for="lastName" class="col-lg-3 col-form-label carisa-muted">Last Name</label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control" name="lastname" id="lastName" required <?php if(isset($lastname)) {echo 'value="' .$lastname. '"';} ?>>
                                         <small id="lastName_regex" data-status=''></small>
                                     </div>
                                 </div>
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="contact" class="col-lg-3 col-form-label text-muted">Phone Number</label>
+                                    <label for="contact" class="col-lg-3 col-form-label carisa-muted">Phone Number</label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control" name="contact" id="contact" required <?php if(isset($contact)) {echo 'value="' .$contact. '"';} ?>>
                                         <small id="contact_regex" data-status=''></small>
@@ -35,26 +35,26 @@
                             </div>
                             <hr>
                             <div class="col-12">
-                                <div class="mb-3"><b class="">System Credentials</b></div>
+                                <div class="mb-3"><b class="carisa-purple">System Credentials</b></div>
                                 <input type="hidden" name="type" value="3">
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="email" class="col-lg-3 col-form-label text-muted">Email</label>
+                                    <label for="email" class="col-lg-3 col-form-label carisa-muted">Email</label>
                                     <div class="col-lg-9">
                                         <input type="email" class="form-control" name="email" id="email" required <?php if(isset($email)) {echo 'value="' .$email. '"';} ?>>
                                         <small id="email_regex" data-status=''></small>
                                     </div>
                                 </div>
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="<?php echo isset($id) ? "npassword" : "password" ?>" class="col-lg-3 col-form-label text-muted"><?php echo isset($id) ? 'New ' : '' ?>Password</label>
+                                    <label for="<?php echo isset($id) ? "npassword" : "password" ?>" class="col-lg-3 col-form-label carisa-muted"><?php echo isset($id) ? 'New ' : '' ?>Password</label>
                                     <div class="col-lg-9">
                                         <input type="password" class="form-control" name="<?php echo isset($id) ? "npassword" : "password" ?>" id="<?php echo isset($id) ? "npassword" : "password" ?>" <?php echo isset($id) ? "" : "required" ?>>
-                                        <div id="passwordHelpBlock" class="form-text">
-                                            <?php echo isset($id) ? "Leave this empty if you are not intended to update your password.<br>" : '' ?>Your password must be 6 or more characters long, contain at least one uppercase letter and one number, and must not contain spaces.
+                                        <div id="passwordHelpBlock" class="form-text fst-italic">
+                                            <?php echo isset($id) ? "Leave this empty if you are not changing your password.<br>" : '' ?>Your password must be 6 or more characters long, contain at least one uppercase letter and one number, and must not contain spaces.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="cpassword" class="col-lg-3 col-form-label text-muted">Confirm Password</label>
+                                    <label for="cpassword" class="col-lg-3 col-form-label carisa-muted">Confirm Password</label>
                                     <div class="col-lg-9">
                                         <input type="password" class="form-control" name="cpassword" id="cpassword" <?php echo isset($id) ? "" : "required" ?>>
                                         <small id="pass_match" data-status=''></small>
@@ -66,7 +66,7 @@
                             <div class="col-12">
                                 <div class="mb-3"><b>Please enter your current password to save your changes.</b></div>
                                 <div class="mb-3 row flex-column flex-lg-row">
-                                    <label for="currpassword" class="col-lg-3 col-form-label text-muted">Current Password</label>
+                                    <label for="currpassword" class="col-lg-3 col-form-label carisa-muted">Current Password</label>
                                     <div class="col-lg-9">
                                         <input type="password" class="form-control" name="currpassword" id="currpassword" required>
                                         
@@ -79,8 +79,8 @@
                 </div>
                     <div class="card-footer">
                         <div class="col-lg-12 justify-content-end d-flex">
-                            <button id="submitBtn" class="btn btn-primary me-2" form="manage-user">Save</button>
-                            <button class="btn btn-secondary" type="button" onclick="location.href = 'index.php'">Cancel</button>
+                            <button id="submitBtn" class="btn carisa-btn me-2" form="manage-user">Save</button>
+                            <button class="btn btn-secondary btn0" type="button" onclick="location.href = 'index.php'">Cancel</button>
                     </div>
                 </div>
             </div>

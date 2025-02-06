@@ -92,8 +92,8 @@ body {
   color: blue;
 }
 
-.showTxt:hover {
-  text-decoration: underline;
+.showTxt:hover, .moreInfo:hover {
+  /* text-decoration: underline; */
   cursor: pointer;
 }
 

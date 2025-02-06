@@ -138,7 +138,8 @@
                 $data .= ", question_id='".$parsed_data['qid'][$k]."'";
                 $data .= ", user_id='{$_SESSION['login_id']}' ";
                 if($parsed_data['type'][$k] == 'check_opt'){
-                    $data .= ", answer='[".implode("],[",$parsed_data['answer'][$k])."]' ";
+                    // $data .= ", answer='[" .implode('],[', $parsed_data['answer'][$k]). "]' ";
+                    $data .= ", answer='$answer_key[$i]' ";
                 }else{
                     $data .= ", answer='$answer_key[$i]' "; //$answer["zjqrf"] = point
                 }

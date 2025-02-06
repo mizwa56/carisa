@@ -1,6 +1,6 @@
 <section class="row py-5 container mx-auto">
   <div class="col-12 text-center mb-5">
-    <h1 class="fw-bold">Contact Us <span class="text-danger">(Work in Progress)</span></h1>
+    <h1 class="fw-bold">Contact Us</h1>
   </div>
   <div class="col-xl-12 text-bg-light">
     <div class="row">
@@ -8,22 +8,22 @@
         <h1 class="fw-bold mb-4">Send us a message</h1>
         <form action="" class="">
           <div class="row mb-4">
-            <div class="col form-floating">
-              <input type="text" class="form-control" name="firstname" id="firstName" placeholder="First Name">
+            <div class="col-xl mb-4 mb-xl-0 form-floating">
+              <input type="text" class="form-control ps-3" name="firstname" id="firstName" placeholder="First Name">
               <label for="firstName" class="ms-3">First Name</label>
             </div>
-            <div class="col form-floating">
-              <input type="text" class="form-control" name="lastname" placeholder="Last Name" id="lastName">
+            <div class="col-xl form-floating">
+              <input type="text" class="form-control ps-3" name="lastname" placeholder="Last Name" id="lastName">
               <label for="lastName" class="ms-3">Last Name</label>
             </div>
           </div>
           <div class="row mb-4">
-            <div class="col form-floating">
-              <input type="text" class="form-control" name="email" placeholder="Email Address" id="email">
+            <div class="col-xl mb-4 mb-xl-0 form-floating">
+              <input type="text" class="form-control ps-3" name="email" placeholder="Email Address" id="email">
               <label for="email" class="ms-3">Email</label>
             </div>
-            <div class="col form-floating">
-              <input type="text" class="form-control" name="contact" placeholder="Phone Number" id="contact">
+            <div class="col-xl form-floating">
+              <input type="text" class="form-control ps-3" name="contact" placeholder="Phone Number" id="contact">
               <label for="contact" class="ms-3">Phone Number</label>
             </div>
           </div>

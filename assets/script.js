@@ -1,14 +1,13 @@
 // To calculate the score from questionnaire
 window.getResult = function($data, $score) {
     let result = [];
-    result['title'] = "Your responses on " + $data.survey_acronym + ": " + $data.survey_name + " Risk Assessment were successfully submitted. " + $data.lang;
+    result['title'] = "Your responses on " + $data.survey_acronym + ": " + $data.survey_name + " Risk Assessment were successfully submitted.";
 
     if($data.lang == 'eng') {
         const hiSuggestion = "We strongly suggest that you seek medical assistance (including Ear, Nose and Throat examination) from relevant medical specialist(s) as soon as possible to get further professional advice, and proper diagnosis. It is necessary that you consider quarterly to half yearly medical check up.";
         const middleSuggestion = "While you may be healthy now, it is advisable that you go for regular medical check up. It pays to have a healthy lifestyle too.";
         const loSuggestion = "However, it is still good to live a healthy lifestyle, and go for regular medical check up.";
         
-        // $score = 37;
         // BreCRA
         if($data.survey_id == 6) {
             if($score <= 20) {
@@ -249,7 +248,7 @@ window.getResult = function($data, $score) {
         }
     }
     else if($data.lang == 'mandarin') {
-        
+        console.log("mandarin here");
     }
     else if($data.lang == 'iban') {
         const hiSuggestion = "Nuan patut betemu enggau bala sida lutor enggau jampat awakka ulih didiagnosis, diperesa (beperesa pending, idung enggau rekung) sereta diperubat. Nuan patut beperesa pengerai tetiap suku taun tauka setengah taun sekali.";

@@ -36,8 +36,8 @@
                     <div class="d-flex justify-content-between flex-column flex-lg-row gap-2">
                         <button class="btn carisa-btn btn-lg" onclick="location.href = 'index.php?page=<?php echo $_GET['page'] ?>&id=<?php echo $_GET['id'] ?>&lang=eng'">English</button>
                         <button class="btn carisa-btn btn-lg" onclick="location.href = 'index.php?page=<?php echo $_GET['page'] ?>&id=<?php echo $_GET['id'] ?>&lang=malay'">Malay</button>
-                        <button class="btn carisa-btn btn-lg">Mandarin</button>
-                        <button class="btn carisa-btn btn-lg">Iban</button>
+                        <button class="btn carisa-btn btn-lg" onclick="location.href = 'index.php?page=<?php echo $_GET['page'] ?>&id=<?php echo $_GET['id'] ?>&lang=mandarin'">Mandarin</button>
+                        <button class="btn carisa-btn btn-lg" disabled onclick="location.href = 'index.php?page=<?php echo $_GET['page'] ?>&id=<?php echo $_GET['id'] ?>&lang=iban'">Iban</button>
                     </div>
                 </div>
             </div>
@@ -52,6 +52,7 @@
 					<input type="hidden" name="survey_id" value="<?php echo $id ?>">
                     <input type="hidden" name="survey_name" value="<?php echo $title ?>">
                     <input type="hidden" name="survey_acronym" value="<?php echo $acronym ?>">
+                    <input type="hidden" name="lang" value="<?php echo $lang ?>">
 				<div class="container py-4 d-flex flex-column gap-4">
 					<?php 
 					$question = $conn->query("SELECT * FROM questions where lang = '$lang' and  survey_id = $id order by abs(order_by) asc,abs(id) asc");
@@ -61,25 +62,33 @@
 					<div class="d-flex flex-column gap-2 px-3 border-start border-5 rounded-start-1" style="--bs-border-color: #4e4ebc">
 						<strong class="carisa-purple"><?php echo $row['question'] ?></strong>	
                         <small class="showTxt" onclick="showInfo(<?php echo $i ?>)"><i>Show more</i></small>
-                        <small class="moreInfo text-danger"><?php echo $row['more_info'] ?></small>
+                        <small class="moreInfo text-danger" onclick="hideInfo(<?php echo $i ?>)"><?php echo $row['more_info'] ?></small>
 						<div class="col-md-12">
                             <input type="hidden" name="qid[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>">	
                             <input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
                                 <?php
                                     if($row['type'] == 'radio_opt'):
-                                        foreach(json_decode($row['frm_option']) as $k => $v):
+                                    foreach(json_decode($row['frm_option']) as $k => $v):
                                 ?>
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="radio" id="<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $v->points ?>" required>
-                                    <!-- <input type="hidden" name="key[<?php echo $k ?>]" value="<?php echo $v->label ?>"> -->
                                     <label class="form-check-label" for="<?php echo $k ?>"><?php echo $v->label ?></label>
                                 </div>
-                                    <?php endforeach; ?>
-                            <?php else: ?>
-                                <div class="form-group">
-                                    <textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
+                                <?php endforeach; ?>
+                                <?php
+                                    elseif($row['type'] == 'check_opt'):
+                                    foreach(json_decode($row['frm_option']) as $k => $v):
+                                ?>
+                                <div class="form-check mb-2 check-input">
+                                    <input class="form-check-input" type="checkbox" id="<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $v->points ?>">
+                                    <label class="form-check-label" for="<?php echo $k ?>"><?php echo $v->label ?></label>
                                 </div>
-                            <?php endif; ?>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="form-group">
+                                        <textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
+                                    </div>
+                                <?php endif; ?>
 						</div>	
 					</div>
 					<?php 
@@ -98,32 +107,6 @@
 						<button class="btn btn-primary mx-1" type="button" onclick="">Cancel</button>
 					</div>
                 </div>
-
-                <!-- <form action="" id="questionnaire" class="container py-4 d-flex flex-column gap-4">
-                    <div class="d-flex flex-column gap-2 px-3 border-start border-5 border-warning rounded-start-1">
-                        <strong>Question goes here...</strong>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="" id="">
-                            <label for="" class="form-check-label">Answer 1</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="" id="">
-                            <label for="" class="form-check-label">Answer 2</label>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column gap-2 px-3 border-start border-5 border-warning">
-                        <strong>Question goes here...</strong>
-                        <div class="form-group">
-                            <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
-                        </div>
-                    </div>
-                </form>
-                <div class="card-footer">
-                    <div class="d-flex w-100 justify-content-center">
-						<button class="btn btn-primary mx-1" form="manage-survey">Submit Answer</button>
-						<button class="btn btn-primary mx-1" type="button" onclick="">Cancel</button>
-					</div>
-                </div> -->
             </div>
             <?php endif ?>
         </div>
@@ -136,69 +119,65 @@
         e.preventDefault();
         let score = 0;
         let ansKey = [];
-        const answer = $("input[type='radio']:checked");
+        let checkAns = "";
+        const answer = $("input[type='radio']:checked, input[type='checkbox']:checked");
+
         for(let i = 0; i < answer.length; i++){
-            console.log(answer[i].id)
-            ansKey.push(answer[i].id)
-            score += parseInt(answer[i].value);    
+            if(answer[i].type === 'checkbox') {
+                let j = i;
+                i--;
+                const cAnswers = $(".check-input input[type='checkbox']:checked");
+                cAnswers.each(function() {
+                    score += parseInt($(this).val())
+                    checkAns += $(this).attr('id') + ",";
+                    i++
+                })
+                checkAns = checkAns.slice(0, -1)
+                ansKey.push(checkAns)
+            }
+            else {
+                // console.log(answer[i].id)
+                ansKey.push(answer[i].id)
+                score += parseInt(answer[i].value);    
+            }
         }
-		const data = new FormData($(this)[0]);
+        console.debug(ansKey)
+
+
+        const data = new FormData($(this)[0]);
         data.forEach((value, key) => data[key] = value);
-        console.log($(this).serialize())
         getResult(data, score);
-
-        $.ajax({
-			// url:'ajax.php?action=data_serialization',
-			url:'ajax.php?action=save_answer',
-			method:'POST',
-			data:{frm_data: $(this).serialize(), ans_key: ansKey},
-			// data:$(this).serialize(),
-            error:err=>{
-	              console.log()
-	              alert("An error occured")
-	          },
-			success:function(resp){
-				if(resp == 1){
-					// alert_toast("Thank You.",'success')
-					// setTimeout(function(){
-					// 	location.href = 'index.php?page=survey_widget'
-					// },2000)
-                    showAlert("You have successfully submitted your responsed. Thank you.", "success");
-				}
-                else
-                    showAlert("An error occured. Please try again!.", "danger");
-			}
-		})
-        
-        // var risk;
-        // var riskDesc;
-        // var suggestion;
-        // var score = 0;
-        
-        // const hiSuggestion = "We strongly suggest that you seek medical assistance (including Ear, Nose and Throat examination) from relevant medical specialist(s) as soon as possible to get further professional advice, and proper diagnosis. It is necessary that you consider quarterly to half yearly medical check up.";
-        
-        // const loSuggestion = "However, it is still good to live a healthy lifestyle, and go for regular medical check up.";
-        
-        // console.log(typeof(data))
-        // console.log(typeof(data))
-        
-
-        // risk = (score > 5) ? "High Risk" : "Low Risk";
-        // riskDesc = (score > 5) ? "high breast cancer risk" : "low breast cancer risk";
-        // suggestion = (score > 5) ? hiSuggestion : loSuggestion;
-        
-        // uni_modal("Your responses on BreCRA: Breast Cancer Risk Assessment were successfully submitted.", "result.php", "large", risk, riskDesc, suggestion)
-        // $('#score').html(score);
+            
+            $.ajax({
+                url:'ajax.php?action=save_answer',
+                method:'POST',
+                data:{frm_data: $(this).serialize(), ans_key: ansKey},
+                error:err=>{
+                    console.log()
+                    alert("An error occured")
+                },
+                success:function(resp){
+                    if(resp == 1){
+                        showAlert("You have successfully submitted your responsed. Thank you.", "success");
+                    }
+                    else
+                        showAlert("An error occured. Please try again!.", "danger");
+                }
+            })
     })
 
     $('.moreInfo').hide();
+    const info = document.querySelectorAll('.moreInfo');
+    const text = document.querySelectorAll('.showTxt');
     
     function showInfo(n) {
-        const info = document.querySelectorAll('.moreInfo');
-        const text = document.querySelectorAll('.showTxt');
         text[n].style.display = 'none';
         info[n].style.display = 'block';
-        
+    }
+
+    function hideInfo(n) {
+        text[n].style.display = 'block';
+        info[n].style.display = 'none';
     }
 
 </script>

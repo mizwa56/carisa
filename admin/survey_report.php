@@ -34,7 +34,8 @@ $answers = $conn->query("SELECT distinct(survey_id) from answers where user_id =
                <div class="row mt-3">
                	<hr class="border-primary">
                	<div class="d-flex justify-content-center w-100 text-center">
-               			<a href="index.php?page=view_survey_report&id=<?php echo $row['id'] ?>" class="btn btn-sm bg-gradient-primary"><i class="fa fa-poll"></i> View Report</a>
+					<a href="index.php?page=view_survey_report&id=<?php echo $row['id'] ?>" class="btn btn-sm bg-gradient-primary"><i class="fa fa-poll"></i> View Report</a>
+					<a href="index.php?page=view_user_answers&id=<?php echo $row['id'] ?>" class="btn btn-sm bg-gradient-primary ml-3"><i class="fa fa-poll"></i> View Users Answers</a>
                	</div>
                </div>
               </div>

@@ -224,7 +224,7 @@ $answers = $conn->query("SELECT distinct(user_id) from answers where survey_id =
 							<div class="collapse" id="ibanBody" aria-labelledby="ibanSurvey" data-parent="#surveyList">
 								<div class="card-body">
 									<?php 
-									$question = $conn->query("SELECT * FROM questions where survey_id = $id and lang = 'mandarin' order by abs(order_by) asc,abs(id) asc");
+									$question = $conn->query("SELECT * FROM questions where survey_id = $id and lang = 'iban' order by abs(order_by) asc,abs(id) asc");
 									while($row=$question->fetch_assoc()):	
 									?>
 									<div class="callout callout-info">
